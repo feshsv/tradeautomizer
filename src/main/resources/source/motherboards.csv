@@ -1,0 +1,22 @@
+model;socket;processors_count;dimm_count;chipset;size;pci-e_x40;pci-e_x32;pci-e_x16;pci-e_x8;pci-e_x4;pci-e_x1;m_2_sata;m_2_pci-e_x4;usb_2_internal;usb_2_external;usb_3_internal;usb_3_external;super_dom;com_external;com_internal;lan_count;lan_speed;lan_speed_unit;sata_count;is_sas
+X11SSW-TF;1151;UP;4;C236;Proprietary;0;0;1;0;0;0;0;1;4;2;3;2;2;1;1;2;1;Gb/s;6;false
+X11DSN-TSQ;3647;DP;12;C627;Proprietary;0;0;2;0;0;0;0;1;0;0;1;2;2;1;1;2;10;Gb/s;0;false
+X11DSN-TS;3647;DP;12;C624;Proprietary;0;0;2;0;0;0;0;1;0;0;1;2;2;1;1;2;10;Gb/s;0;false
+X11DSF-E;3647;DP;24;C627;Proprietary;0;1;4;0;2;0;0;0;0;2;3;0;2;0;1;2;10;Gb/s;6;false
+X11DPX-T;3647;DP;16;C621;Proprietary;0;0;4;7;0;0;0;1;2;2;3;2;2;1;1;2;10;Gb/s;10;false
+X11DPI-NT;3647;DP;16;C622;E-ATX;0;0;4;2;0;0;0;4;2;2;3;2;2;1;1;2;10;Gb/s;14;false
+X11DPI-N;3647;DP;16;C622;E-ATX;0;0;4;2;0;0;0;4;2;2;3;2;2;1;1;2;1;Gb/s;14;false
+X11DPH-Tq;3647;DP;16;C627;E-ATX;0;0;3;3;0;0;0;2;0;0;3;4;2;1;0;2;10;Gb/s;10;false
+X11DPH-i;3647;DP;16;C621;E-ATX;0;0;4;3;0;0;0;2;0;0;3;4;2;1;0;2;1;Gb/s;10;false
+X11DPH-T;3647;DP;16;C621;E-ATX;0;0;4;3;0;0;0;2;0;0;3;4;2;1;0;2;10;Gb/s;10;false
+X10DRi;2011-3;DP;16;C612;E-ATX;0;0;3;3;0;0;0;0;4;2;3;2;0;1;1;2;1;Gb/s;10;false
+X10DRH-iLN4;2011-3;DP;16;C612;E-ATX;0;0;2;4;0;0;0;0;2;2;3;2;2;1;0;4;1;Gb/s;10;true
+X10DRH-i;2011-3;DP;16;C612;E-ATX;0;0;1;6;0;0;0;0;2;2;3;2;2;1;1;2;1;Gb/s;10;false
+X10DRD-LTP;2011-3;DP;8;C612;E-ATX;0;0;0;1;0;0;0;0;3;4;0;0;2;1;1;2;10;Gb/s SFP+;6;false
+X10DRH-C;2011-3;DP;16;C612;E-ATX;0;0;1;6;0;0;0;0;2;2;3;2;2;1;1;2;1;Gb/s;10;false
+X10DRH-CLN4;2011-3;DP;16;C612;E-ATX;0;0;2;4;0;0;0;0;5;0;3;2;2;1;1;4;1;Gb/s;10;true
+EP2C622D24LM2;3647;DP;24;C622;Proprietary L-shape;0;0;2;1;0;0;0;2;2;0;3;2;2;1;0;0;0;no info;14;true
+ASMB-935I;3647;DP;24;C621;E-ATX;0;0;5;1;0;0;0;1;5;0;4;2;0;1;1;2;1;Gb/s;10;false
+ASMB-815-00A1E;3647;UP;6;C621;ATX;0;0;2;2;1;1;0;1;5;2;2;4;0;1;1;2;1;Gb/s;8;false
+Z11PR-D16;3647;DP;16;C621;EEB;0;0;2;4;0;0;0;2;4;0;2;2;0;1;0;2;1;Gb/s;11;false
+Z11PA-D8;3647;DP;8;C621;CEB;0;0;2;1;0;0;0;2;2;0;2;4;0;0;1;4;1;Gb/s;10;false

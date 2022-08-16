@@ -37,10 +37,11 @@ public class TradeautomizerApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
         commonFillerDb.fillDb();
-        final var tzLines = DocxHelper.getLineByLineTextFromDocx(new File("C:\\Users\\Sergey\\Downloads\\Закупки\\simple.docx"));
+        final var tzLines = DocxHelper.getLineByLineTextFromDocx(new File("src\\main\\resources\\source\\simple.docx"));
         final var processors = processorsFinder.get(tzLines);
         final var motherboards = motherboardFinder.get(tzLines);
 
-
+        //TODO надо попросить результат обработки человеком этих требований с этой эксель таблицей
+        //TODO надо показать какие требования сейчас обрабатываются для проца и для матери
     }
 }

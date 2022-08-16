@@ -27,8 +27,8 @@ public class CommonFillerDb {
 
     public void fillDb() {
         Map<Daos, String> daoTypeAndCsvFilePath = new HashMap<>();
-        daoTypeAndCsvFilePath.put(ProcessorDao.builder().build(), "C:\\Users\\Sergey\\Downloads\\Закупки\\processors.csv");
-        daoTypeAndCsvFilePath.put(MotherboardDao.builder().build(), "C:\\Users\\Sergey\\Downloads\\Закупки\\motherboards.csv");
+        daoTypeAndCsvFilePath.put(ProcessorDao.builder().build(), "src\\main\\resources\\source\\processors.csv");
+        daoTypeAndCsvFilePath.put(MotherboardDao.builder().build(), "src\\main\\resources\\source\\motherboards.csv");
 
         for (Map.Entry<Daos, String> pair : daoTypeAndCsvFilePath.entrySet()) {
             if(pair.getKey() instanceof ProcessorDao) {
@@ -38,7 +38,6 @@ public class CommonFillerDb {
                         .collect(Collectors.toList());
                 var repository = repositoryFactory.getRepository(pair.getKey());
                 entities.forEach(repository::save);
-                //repository.findAll().forEach(System.out::println);
             } else if(pair.getKey() instanceof MotherboardDao) {
                 var entities = CsvToDaos.getDaos((MotherboardDao) pair.getKey(), pair.getValue())
                         .stream()
@@ -46,7 +45,6 @@ public class CommonFillerDb {
                         .collect(Collectors.toList());
                 var repository = repositoryFactory.getRepository(pair.getKey());
                 entities.forEach(repository::save);
-                //repository.findAll().forEach(System.out::println);
             }
         }
     }
