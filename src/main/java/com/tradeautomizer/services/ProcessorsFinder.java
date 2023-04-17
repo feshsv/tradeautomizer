@@ -1,7 +1,7 @@
 package com.tradeautomizer.services;
 
-import com.tradeautomizer.entity.ProcessorEntity;
-import com.tradeautomizer.repository.ProcessorsRepository;
+import com.tradeautomizer.entities.ProcessorEntity;
+import com.tradeautomizer.repositories.ProcessorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,23 +28,23 @@ public class ProcessorsFinder {
 
     private void findProcessorsTzLines(String[] tzLines) {
         processorRelatedLines.clear();
-        for(String oneLine : tzLines) {
+        for (String oneLine : tzLines) {
             oneLine = oneLine.toLowerCase();
-            if(oneLine.contains("количество ядер") ||
+            if (oneLine.contains("количество ядер") ||
                     oneLine.contains("количество потоков") ||
                     oneLine.contains("базовая частота") ||
                     oneLine.contains("объем кэш") ||
-                    oneLine.contains("количество слотов для модулей оперативной памяти")){
+                    oneLine.contains("количество слотов для модулей оперативной памяти")) {
                 processorRelatedLines.add(oneLine);
             }
         }
     }
 
     private void selectProcessorsByCore() {
-        for(String oneLine : processorRelatedLines) {
-            if(oneLine.contains("количество ядер")) {
+        for (String oneLine : processorRelatedLines) {
+            if (oneLine.contains("количество ядер")) {
                 List<ProcessorEntity> filteredByCore;
-                if(oneLine.contains("≥")) {
+                if (oneLine.contains("≥")) {
                     filteredByCore = processorEntities.stream()
                             .filter(proc -> proc.getCore() >= getIntValue(oneLine))
                             .collect(Collectors.toList());
@@ -61,10 +61,10 @@ public class ProcessorsFinder {
     }
 
     private void selectProcessorsByFlow() {
-        for(String oneLine : processorRelatedLines) {
-            if(oneLine.contains("количество потоков")) {
+        for (String oneLine : processorRelatedLines) {
+            if (oneLine.contains("количество потоков")) {
                 List<ProcessorEntity> filteredByFlow;
-                if(oneLine.contains("≥")) {
+                if (oneLine.contains("≥")) {
                     filteredByFlow = processorEntities.stream()
                             .filter(proc -> proc.getFlow() >= getIntValue(oneLine))
                             .collect(Collectors.toList());
@@ -81,10 +81,10 @@ public class ProcessorsFinder {
     }
 
     private void selectProcessorsByBaseFrequency() {
-        for(String oneLine : processorRelatedLines) {
-            if(oneLine.contains("базовая частота")) {
+        for (String oneLine : processorRelatedLines) {
+            if (oneLine.contains("базовая частота")) {
                 List<ProcessorEntity> filteredByBaseFrequency;
-                if(oneLine.contains("≥")) {
+                if (oneLine.contains("≥")) {
                     filteredByBaseFrequency = processorEntities.stream()
                             .filter(proc -> proc.getBaseFrequency() >= getDoubleValue(oneLine))
                             .collect(Collectors.toList());
@@ -101,10 +101,10 @@ public class ProcessorsFinder {
     }
 
     private void selectProcessorsByCache() {
-        for(String oneLine : processorRelatedLines) {
-            if(oneLine.contains("объем кэш")) {
+        for (String oneLine : processorRelatedLines) {
+            if (oneLine.contains("объем кэш")) {
                 List<ProcessorEntity> filteredByCache;
-                if(oneLine.contains("≥")) {
+                if (oneLine.contains("≥")) {
                     filteredByCache = processorEntities.stream()
                             .filter(proc -> proc.getCache() >= getDoubleValue(oneLine))
                             .collect(Collectors.toList());
@@ -121,10 +121,10 @@ public class ProcessorsFinder {
     }
 
     private void selectProcessorsByMaxMemoryModules() {
-        for(String oneLine : processorRelatedLines) {
-            if(oneLine.contains("количество слотов для модулей оперативной памяти")) {
+        for (String oneLine : processorRelatedLines) {
+            if (oneLine.contains("количество слотов для модулей оперативной памяти")) {
                 List<ProcessorEntity> filteredByMaxMemoryModules;
-                if(oneLine.contains("≥")) {
+                if (oneLine.contains("≥")) {
                     filteredByMaxMemoryModules = processorEntities.stream()
                             .filter(proc -> proc.getMemoryCount() >= getIntValue(oneLine))
                             .collect(Collectors.toList());
@@ -141,7 +141,7 @@ public class ProcessorsFinder {
     }
 
     private Integer getIntValue(String line) {
-        if(line.contains("≥")) {
+        if (line.contains("≥")) {
             return Integer.parseInt(line.split("≥", 2)[1].replaceAll("[^0-9.]", ""));
         } else {
             return Integer.parseInt(line.split("≤", 2)[1].replaceAll("[^0-9.]", ""));
@@ -149,14 +149,14 @@ public class ProcessorsFinder {
     }
 
     private Double getDoubleValue(String line) {
-        if(line.contains("≥")) {
+        if (line.contains("≥")) {
             return Double.parseDouble(line.split("≥", 2)[1].replaceAll("[^0-9.]", ""));
         } else {
             return Double.parseDouble(line.split("≤", 2)[1].replaceAll("[^0-9.]", ""));
         }
     }
 
-    public List<ProcessorEntity> get(String[] tzLines){
+    public List<ProcessorEntity> get(String[] tzLines) {
         getAllProcessors();
         findProcessorsTzLines(tzLines);
         selectProcessorsByCore();

@@ -1,11 +1,11 @@
-package com.tradeautomizer.dao;
+package com.tradeautomizer.dto;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
 @Value
 @Builder
-public class MotherboardDao implements Daos {
+public class MotherboarDto {
+    static MotherboarDto EMPTY = MotherboarDto.builder().build();
     String model;
     String socket;
     String processorsCount;

@@ -1,51 +1,41 @@
 package com.tradeautomizer.populatedb;
 
-import com.tradeautomizer.dao.Daos;
-import com.tradeautomizer.dao.MotherboardDao;
-import com.tradeautomizer.dao.ProcessorDao;
-import com.tradeautomizer.mappers.CommonMapper;
-import com.tradeautomizer.repository.RepositoryFactory;
+import com.tradeautomizer.entities.AbstractEntity;
+import com.tradeautomizer.repositories.CommonRepository;
+import com.tradeautomizer.repositories.EntityRepoProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.function.Function;
 
 @Component
 public class CommonFillerDb {
 
-    private final RepositoryFactory repositoryFactory;
-    private final CommonMapper commonMapper;
+    private final EntityRepoProvider entityRepoProvider;
 
     @Autowired
-    public CommonFillerDb(RepositoryFactory repositoryFactory,
-                          CommonMapper commonMapper) {
-        this.repositoryFactory = repositoryFactory;
-        this.commonMapper = commonMapper;
+    public CommonFillerDb(EntityRepoProvider entityRepoProvider) {
+        this.entityRepoProvider = entityRepoProvider;
     }
 
-    public void fillDb() {
-        Map<Daos, String> daoTypeAndCsvFilePath = new HashMap<>();
-        daoTypeAndCsvFilePath.put(ProcessorDao.builder().build(), "src\\main\\resources\\source\\processors.csv");
-        daoTypeAndCsvFilePath.put(MotherboardDao.builder().build(), "src\\main\\resources\\source\\motherboards.csv");
+    public void initDb() {
+        loadDb("src\\main\\resources\\source\\processors.csv", ObjectFactory::createProcessorEntity);
+        loadDb("src\\main\\resources\\source\\motherboards.csv", ObjectFactory::createMotherboarEntity);
+    }
 
-        for (Map.Entry<Daos, String> pair : daoTypeAndCsvFilePath.entrySet()) {
-            if(pair.getKey() instanceof ProcessorDao) {
-                var entities = CsvToDaos.getDaos((ProcessorDao) pair.getKey(), pair.getValue())
-                        .stream()
-                        .map(commonMapper::map)
-                        .collect(Collectors.toList());
-                var repository = repositoryFactory.getRepository(pair.getKey());
-                entities.forEach(repository::save);
-            } else if(pair.getKey() instanceof MotherboardDao) {
-                var entities = CsvToDaos.getDaos((MotherboardDao) pair.getKey(), pair.getValue())
-                        .stream()
-                        .map(commonMapper::map)
-                        .collect(Collectors.toList());
-                var repository = repositoryFactory.getRepository(pair.getKey());
-                entities.forEach(repository::save);
-            }
-        }
+    public <T extends AbstractEntity> void loadDb(String path, Function<String, T> arrayObj) {
+        Collection<String> lines = CsvToDtos.readCsv(path);
+        String oneLine = lines.stream().reduce((first, second) -> first).orElse(null);
+        T apply = arrayObj.apply(oneLine);
+        CommonRepository<AbstractEntity> repository1 = entityRepoProvider.getRepository(apply.getClass());
+        repository1.save(apply);
+
+        lines.stream()
+                .map(arrayObj)
+                .forEach(t -> {
+                    CommonRepository<AbstractEntity> repository = entityRepoProvider.getRepository(t.getClass());
+                    repository.save(t);
+                });
     }
 }

@@ -1,9 +1,9 @@
 package com.tradeautomizer.mappers;
 
-import com.tradeautomizer.dao.MotherboardDao;
-import com.tradeautomizer.dao.ProcessorDao;
-import com.tradeautomizer.entity.MotherboardEntity;
-import com.tradeautomizer.entity.ProcessorEntity;
+import com.tradeautomizer.dto.MotherboarDto;
+import com.tradeautomizer.dto.ProcessorDto;
+import com.tradeautomizer.entities.MotherboardEntity;
+import com.tradeautomizer.entities.ProcessorEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -11,12 +11,12 @@ import org.mapstruct.Mapping;
 public interface CommonMapper {
 
     @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID().toString())")
-    ProcessorEntity map(ProcessorDao dao);
+    ProcessorEntity map(ProcessorDto dao);
 
-    ProcessorDao map(ProcessorEntity entity);
+    ProcessorDto map(ProcessorEntity entity);
 
     @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID().toString())")
-    MotherboardEntity map(MotherboardDao dao);
+    MotherboardEntity map(MotherboarDto dao);
 
-    MotherboardDao map(MotherboardEntity entity);
+    MotherboarDto map(MotherboardEntity entity);
 }

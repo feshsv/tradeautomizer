@@ -36,7 +36,7 @@ public class TradeautomizerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        commonFillerDb.fillDb();
+        commonFillerDb.initDb();
         final var tzLines = DocxHelper.getLineByLineTextFromDocx(new File("src\\main\\resources\\source\\simple.docx"));
         final var processors = processorsFinder.get(tzLines);
         final var motherboards = motherboardFinder.get(tzLines);

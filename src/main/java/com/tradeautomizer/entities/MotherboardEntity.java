@@ -1,4 +1,4 @@
-package com.tradeautomizer.entity;
+package com.tradeautomizer.entities;
 
 import lombok.Data;
 import lombok.extern.jackson.Jacksonized;

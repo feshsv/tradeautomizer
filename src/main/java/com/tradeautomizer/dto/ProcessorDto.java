@@ -1,11 +1,15 @@
-package com.tradeautomizer.dao;
+package com.tradeautomizer.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
+@Data
 @Builder
-public class ProcessorDao implements Daos {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProcessorDto {
     String model;
     Integer core;
     Integer flow;
