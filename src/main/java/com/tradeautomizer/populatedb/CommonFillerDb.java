@@ -1,8 +1,10 @@
 package com.tradeautomizer.populatedb;
 
 import com.tradeautomizer.entities.AbstractEntity;
-import com.tradeautomizer.repositories.CommonRepository;
-import com.tradeautomizer.repositories.EntityRepoProvider;
+import com.tradeautomizer.entities.MotherboardEntity;
+import com.tradeautomizer.entities.ProcessorEntity;
+import com.tradeautomizer.repositories.MotherboardRepository;
+import com.tradeautomizer.repositories.ProcessorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +14,13 @@ import java.util.function.Function;
 @Component
 public class CommonFillerDb {
 
-    private final EntityRepoProvider entityRepoProvider;
+    private final MotherboardRepository motherboardRepository;
+    private final ProcessorsRepository processorsRepository;
 
     @Autowired
-    public CommonFillerDb(EntityRepoProvider entityRepoProvider) {
-        this.entityRepoProvider = entityRepoProvider;
+    public CommonFillerDb(MotherboardRepository motherboardRepository, ProcessorsRepository processorsRepository) {
+        this.motherboardRepository = motherboardRepository;
+        this.processorsRepository = processorsRepository;
     }
 
     public void initDb() {
@@ -26,16 +30,20 @@ public class CommonFillerDb {
 
     public <T extends AbstractEntity> void loadDb(String path, Function<String, T> arrayObj) {
         Collection<String> lines = CsvToDtos.readCsv(path);
-        String oneLine = lines.stream().reduce((first, second) -> first).orElse(null);
-        T apply = arrayObj.apply(oneLine);
-        CommonRepository<AbstractEntity> repository1 = entityRepoProvider.getRepository(apply.getClass());
-        repository1.save(apply);
-
-        lines.stream()
-                .map(arrayObj)
-                .forEach(t -> {
-                    CommonRepository<AbstractEntity> repository = entityRepoProvider.getRepository(t.getClass());
-                    repository.save(t);
-                });
+        for(String line : lines) {
+            if (line.contains("model") ||
+            line.contains("core") ||
+            line.contains("flow") ||
+            line.contains("base_frequency")) {
+                return;
+            }
+            T someEntity = arrayObj.apply(line);
+            if (someEntity instanceof MotherboardEntity) {
+                motherboardRepository.save((MotherboardEntity) someEntity);
+            }
+            if (someEntity instanceof ProcessorEntity) {
+                processorsRepository.save((ProcessorEntity) someEntity);
+            }
+        }
     }
 }

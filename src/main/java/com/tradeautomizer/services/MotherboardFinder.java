@@ -67,7 +67,7 @@ public class MotherboardFinder {
             if (oneLine.contains("интерфейс поддерживаемых накопителей")) {
                 List<MotherboardEntity> filteredByRomInterfaces;
                 filteredByRomInterfaces = motherboardEntities.stream()
-                        .filter(motherboard -> motherboard.getIsSas() == oneLine.contains("sas"))
+//                        .filter(motherboard -> motherboard.getIsSas() == oneLine.contains("sas"))
                         .filter(motherboard -> motherboard.getSataCount() > 0 && oneLine.contains("sata"))
                         .filter(motherboard -> (motherboard.getUsb2external() > 0 || motherboard.getUsb2internal() > 0 ||
                                 motherboard.getUsb3external() > 0 || motherboard.getUsb3internal() > 0) &&
